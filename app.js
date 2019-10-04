@@ -4,9 +4,38 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+/* authenticate
+*  var passport   = require('passport')
+*  var session    = require('express-session')
+*  var bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
+// For Passport
+
+app.use(session({ secret: 'keyboard cat',resave: true, saveUninitialized:true})); // session secret
+
+app.use(passport.initialize());
+
+app.use(passport.session()); // persistent login sessions
+
+npm i -S express sequelize mysql2
+npm i -S body-parser cookie-parser cors express-validator
+npm i -S jsonwebtoken bcrypt
+npm i -D typescript @types/bcrypt @types/body-parser @types/cookie-parser @types/cors @types/es6-promise @types/express @types/express-validator @types/jsonwebtoken @types/node @types/sequelize
+npm i -g npx
+
+*/
+
+
+
+var agendaRtr = require('./routes/agenda');
+var catmasterRtr = require('./routes/catmaster');
+var consultaRtr = require('./routes/consulta');
+var direccionRtr = require('./routes/direccion');
+var medicamentoRtr = require('./routes/medicamento');
+var personaRtr = require('./routes/persona');
+var recetaRtr = require('./routes/receta');
 var app = express();
 
 // view engine setup
@@ -19,13 +48,22 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+app.use('/api/agenda',agendaRtr);
+app.use('/api/catmaster',catmasterRtr);
+app.use('/api/consulta',consultaRtr);
+app.use('/api/direccion',direccionRtr);
+app.use('/api/medicamento',medicamentoRtr);
+app.use('/api/persona',personaRtr);
+app.use('/api/receta',recetaRtr);
+
+
+/*app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
-});
+});*/
 
 // error handler
 app.use(function(err, req, res, next) {
