@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "build": "./node-modules/.bin/babel src --out-dir dist",
-    "start": "node ./bin/www",
+    "build:app": "npm run clean && ./node_modules/.bin/babel server.js --out-dir dist && ./node_modules/.bin/babel app --out-dir dist/app && cp secrets.json dist",
+    "start": "node app.js",
     "start:babel": "babel-node app.js"
   },
   "dependencies": {

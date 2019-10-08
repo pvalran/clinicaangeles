@@ -1,30 +1,60 @@
-const Medicamentos = require('../models/medicamento');
+const Sequelize = require('sequelize');
+const sequelize = require('../db/database');
+const Op = Sequelize.Op;
+const Medicamento = require('../models/medicamento');
 
-const CtlMedicamentos = class CtlMedicamentos  extends Medicamentos {
-   constructor(){
-      super();
-   }
+const CtlMedicamentos = class CtlMedicamentos extends Medicamento {
+	constructor() {
+		super();
+	}
 
-   dbCreate(model){
-      this.create(model).then(data => {
+	dbIndex() {
+		return Medicamento.findAll();
+	}
 
-      });
-   }
+	dbShow(id) {
+		return Medicamento.findByPk(id);
+	}
 
-   dbUpdate(id,model){
-      this.update(model, {
-         where: {id}
-      }).then(data => {
+	dbCreate(req) {
+		let model = {
+			'receta_id': req.receta_id,
+			'descripcion': req.descripcion,
+			'dosis': req.dosis,
+			'via_administracion': req.via_administracion,
+			'tiempo': req.tiempo,
+			'duracion': req.duracion,
+			'deleted': false
+		};
 
-      });
-   }
+		return Medicamento.findOrCreate({
+			where: {id: req.id},
+			defaults: model
+		});
+	}
 
-   dbDestroy(id){
-      this.destroy({
-         where: {id}
-      }).then(data => {
-        console.log("Done");
-      });
-   }
+	dbUpdate(id, req) {
+		let model = {
+			'receta_id': req.receta_id,
+			'descripcion': req.descripcion,
+			'dosis': req.dosis,
+			'via_administracion': req.via_administracion,
+			'tiempo': req.tiempo,
+			'duracion': req.duracion,
+			'deleted': false
+		};
+
+		return Medicamento.update(model, {
+			where: {id}
+		});
+	}
+
+	dbDestroy(id) {
+		this.destroy({
+			where: {id}
+		}).then(data => {
+			console.log("destroy");
+		});
+	}
 }
 module.exports = CtlMedicamentos;

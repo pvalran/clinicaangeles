@@ -1,31 +1,57 @@
+const Sequelize = require ('sequelize');
+const sequelize = require ('../db/database');
+const Op = Sequelize.Op;
 const Receta = require('../models/receta');
 
-const CtlReceta = class CtlReceta  extends Receta {
-   constructor(){
-      super();
-   }
+const CtlReceta = class CtlReceta extends Receta {
+	constructor() {
+		super();
+	}
 
-   dbCreate(model){
-      this.create(model).then(data => {
+	dbIndex() {
+		return Receta.findAll();
+	}
 
-      });
-   }
+	dbShow(id) {
+		return Receta.findByPk(id);
+	}
 
-   dbUpdate(id,model){
-      this.update(model, {
-         where: {id}
-      }).then(data => {
+	dbCreate(req) {
+		let model = {
+			'persona_id': req.persona_id,
+			'consulta_id': req.consulta_id,
+			'fecha_alta': req.fecha_alta,
+			'descripcion': req.descripcion,
+			'deleted': false
+		};
 
-      });
-   }
+		return Receta.findOrCreate({
+			where: {id: req.id},
+			defaults: model
+		});
+	}
 
-   dbDestroy(id){
-      this.destroy({
-         where: {id}
-      }).then(data => {
-        console.log("Done");
-      });
-   }
+	dbUpdate(id, req) {
+		let model = {
+			'persona_id': req.persona_id,
+			'consulta_id': req.consulta_id,
+			'fecha_alta': req.fecha_alta,
+			'descripcion': req.descripcion,
+			'deleted': false
+		};
+
+		return Receta.update(model, {
+			where: {id}
+		});
+	}
+
+	dbDestroy(id) {
+		this.destroy({
+			where: {id}
+		}).then(data => {
+			console.log("destroy");
+		});
+	}
 }
 
-module.exports =  CtlReceta;
+module.exports = CtlReceta;
