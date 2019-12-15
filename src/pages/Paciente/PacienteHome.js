@@ -150,7 +150,7 @@ class PacienteHome extends Component {
          apellido_paterno:'',
          apellido_materno:'',
          sexo: 'M',
-         tipo_sangre:'M',
+         sangre:'M',
          fecha_nacimiento:'',
          altura:'',
          peso:''
@@ -227,7 +227,7 @@ class PacienteHome extends Component {
             apellido_paterno:'',
             apellido_materno:'',
             sexo: '',
-            tipo_sangre:'',
+            sangre:'',
             fecha_nacimiento:'',
             altura:'',
             peso:''
@@ -266,19 +266,18 @@ class PacienteHome extends Component {
 
    }
 
-   handleData = (data) => {
-      console.log("Data de servidor: "+JSON.stringify(data));
-      let paciente={
-         id:data.id,
-         nombre:data.nombre,
-         apellido_paterno:data.apepat,
-         apellido_materno:data.apemat,
-         sexo: data.sexo,
-         tipo_sangre:data.sangre,
-         fecha_nacimiento:data.fecha_nacimiento,
-         altura:data.altura,
-         peso:data.peso
-      };
+    handleData = (data) => {
+        let paciente={
+            id:data.id,
+            nombre:data.nombre,
+            apellido_paterno:data.apepat,
+            apellido_materno:data.apemat,
+            sexo: data.sexo,
+            sangre:data.sangre,
+            fecha_nacimiento:data.fecha_nacimiento,
+            altura:data.altura,
+            peso:data.peso
+        };
 
       let direccion = {
          id:'',
@@ -640,7 +639,7 @@ class PacienteHome extends Component {
                      <CardContent className="text-xs-center">
                         <Grid container spacing={8}>
                            <Grid item xs={12} sm={4} md={4} lg={4}>
-                              <Select id="tipo_sangre" name="tipo_sangre" value={paciente.tipo_sangre}  onChange={this.handlePaciente} fullWidth>
+                              <Select id="sangre" name="sangre" value={paciente.sangre}  onChange={this.handlePaciente} fullWidth>
                                  <MenuItem value="A+">A+</MenuItem>
                                  <MenuItem value="A-">A-</MenuItem>
                                  <MenuItem value="B+">B+</MenuItem>

@@ -31,7 +31,7 @@ router.post('/', async function (req, res, next) {
 	const objPersona = new CtlPersona();
 	let persona_id = await objPersona.dbCreate(req.body).then(async ([model, created]) => {
 		if (!created) {
-			let persona_id = await Persona.update(model.dataValues, {where: {id: model.id}})
+			let persona_id = await Persona.update(req.body, {where: {id: model.id}})
 				.then(data => {
 					return model.dataValues.id;
 				});
@@ -70,9 +70,9 @@ router.post('/', async function (req, res, next) {
 	});
 
 	const objExpendiente = new CtlExpendiente();
-	req.body.clinicos.forEach((expediente) => {
+	req.body.clinicos.forEach(async (expediente) => {
 		expediente.persona_id = persona_id;
-		let expendiente_id = objExpendiente.dbCreate(expediente).then(async ([model, created]) => {
+		let expendiente_id = await objExpendiente.dbCreate(expediente).then(async ([model, created]) => {
 			if (!created) {
 				let data = {
 					persona_id: expediente.persona_id,
@@ -91,10 +91,9 @@ router.post('/', async function (req, res, next) {
 		});
 	});
 
-	objPersona.dbShow(persona_id).then(data => {
-		let dataResponse = Object.assign('', data);
-		res.status(200).json(dataResponse.dataValues);
-	});
+	let dta = await objPersona.dbShow(persona_id);
+	let dataResponse = Object.assign('', dta);
+	res.status(200).json(dataResponse.dataValues);
 });
 
 router.post('/:id', function (req, res, next) {

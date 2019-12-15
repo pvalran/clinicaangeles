@@ -2,6 +2,8 @@ const Sequelize = require('sequelize');
 const sequelize = require('../db/database');
 const Op = Sequelize.Op;
 const Consulta = require('../models/consulta');
+const Receta = require('../models/receta');
+const Medicamento = require('../models/medicamento');
 
 const CtlConsulta = class CtlConsulta extends Consulta {
 	constructor() {
@@ -13,11 +15,22 @@ const CtlConsulta = class CtlConsulta extends Consulta {
 	}
 
 	dbShow(id) {
-		return Consulta.findByPk(id);
+		return Consulta.findByPk(id, {
+			include: [
+				{
+					model: Receta,
+					as: 'receta',
+					include: [
+						'medicamento'
+					],
+				}
+			]
+		});
 	}
 
 	dbCreate(req) {
 		let model = {
+			'id':'',
 			'persona_id': req.persona_id,
 			'temperatura': req.temperatura,
 			'presion': req.presion,

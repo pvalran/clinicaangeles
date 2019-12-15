@@ -39,11 +39,12 @@ const CtlPersona = class CtlPersona {
 
 	dbCreate(req) {
 		let model = {
+			id:'',
 			nombre: req.nombre,
 			apepat: req.apellido_paterno,
 			apemat: req.apellido_materno,
 			sexo: req.sexo,
-			sangre: req.tipo_sangre,
+			sangre: req.sangre,
 			fecha_nacimiento: req.fecha_nacimiento,
 			altura: req.altura,
 			peso: req.peso,
@@ -62,7 +63,7 @@ const CtlPersona = class CtlPersona {
 			apepat: req.apellido_paterno,
 			apemat: req.apellido_materno,
 			sexo: req.sexo,
-			sangre: req.tipo_sangre,
+			sangre: req.sangre,
 			fecha_nacimiento: req.fecha_nacimiento,
 			altura: req.altura,
 			peso: req.peso,

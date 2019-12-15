@@ -1,6 +1,8 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../db/database');
 
+const Receta = require('./receta');
+
 const Medicamento = sequelize.define('medicamento', {
 	id: {
 		autoIncrement: true,

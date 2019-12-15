@@ -1,6 +1,9 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../db/database');
 
+const Persona = require('./persona');
+const Receta = require('./receta');
+
 const Consulta = sequelize.define('consulta', {
 	id: {
 		autoIncrement: true,
@@ -20,5 +23,8 @@ const Consulta = sequelize.define('consulta', {
 	tableName: 'consulta',
 	timestamps: false
 });
+
+Consulta.hasMany(Receta,{foreignKey:'consulta_id', targetKey: 'id', as: 'receta'});
+Consulta.belongsTo(Persona,{foreignKey:'persona_id',targetKey:'id', as: 'persona'});
 
 module.exports = Consulta;

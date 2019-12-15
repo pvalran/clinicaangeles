@@ -76,113 +76,107 @@ class Header extends Component {
     const { classes, logo, logoAltText } = this.props;
     const { anchorEl, searchExpanded } = this.state;
     return (
-      <AppBar
-        position="static"
-        className={classes.appBar}>
-        <Toolbar className={classes.toolBar}>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={this.handleDrawerToggle}
-          >
-            <MenuIcon />
-          </IconButton>
-
-          <div className={classes.branding}>
-            <img src={logo} alt={logoAltText} className={classes.logo} />
-          </div>
-
-          <Hidden xsDown>
-            <div className={classes.searchWrapper}>
-                <form className={classes.searchForm} method='POST'  onSubmit={this.handleSubmit}>
-                    <input className={classes.searchInput} type="text" placeholder="Buscar paciente" autoFocus={true} />
-                    <IconButton
-                      aria-label="Search"
-                      className={classes.searchIcon}
-                    >
-                      <SearchIcon />
-                    </IconButton>
-                </form>
-            </div>
-          </Hidden>
-
-
-
-          <Hidden smUp>
-            <IconButton
-              color="inherit"
-              onClick={this.handleSearchExpandToggle}
-              aria-expanded={searchExpanded}
-              aria-label="Show searchbar"
-            >
-              <SearchIcon />
-            </IconButton>
-          </Hidden>
-
-
-
-
-          <IconButton
-            aria-label="User Settings"
-            aria-owns={anchorEl ? 'user-menu' : null}
-            aria-haspopup="true"
-            color="inherit"
-            onClick={this.handleSettingdToggle}
-          >
-            <MoreVertIcon />
-          </IconButton>
-
-          <Menu
-            id="user-menu"
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={this.handleCloseMenu}
-          >
-            <MenuItem onClick={this.handleCloseMenu}>
-              <ListItemIcon>
-                <SettingsIcon />
-              </ListItemIcon>
-              <ListItemText inset primary="Configuración" />
-            </MenuItem>
-            <MenuItem onClick={this.handleCloseMenu}>
-              <ListItemIcon>
-                <AccountBoxIcon />
-              </ListItemIcon>
-              <ListItemText inset primary="Perfil" />
-            </MenuItem>
-            <MenuItem onClick={this.handleCloseMenu}>
-              <ListItemIcon>
-                <NotificationsOffIcon />
-              </ListItemIcon>
-              <ListItemText inset primary="Notificaciones" />
-            </MenuItem>
-            <MenuItem onClick={this.handleCloseMenu}>
-              <ListItemIcon>
-                <ExitToAppIcon />
-              </ListItemIcon>
-              <ListItemText inset primary="Cerrar sesión" />
-            </MenuItem>
-          </Menu>
-        </Toolbar>
-        <Hidden smUp>
-          <Collapse in={searchExpanded} timeout="auto" unmountOnExit>
+        <AppBar
+            position="static"
+            className={classes.appBar}>
             <Toolbar className={classes.toolBar}>
-              <div className={classes.searchWrapper}>
-                <form className={classNames(classes.searchForm, 'mr-0')}>
-                  <IconButton
-                    aria-label="Search"
-                    className={classes.searchIcon}
-                  >
-                    <SearchIcon />
-                  </IconButton>
-                  <input className={classes.searchInput} type="text" placeholder="Search" autoFocus="true" />
-                </form>
-              </div>
-            </Toolbar>
-          </Collapse>
-        </Hidden>
+                <IconButton
+                    color="inherit"
+                    aria-label="open drawer"
+                    onClick={this.handleDrawerToggle}
+                >
+                    <MenuIcon />
+                </IconButton>
 
-      </AppBar>
+                <div className={classes.branding}>
+                    <img src={logo} alt={logoAltText} className={classes.logo} />
+                </div>
+
+                <Hidden xsDown>
+                    <div className={classes.searchWrapper}>
+                        <form className={classes.searchForm} method='POST'  onSubmit={this.handleSubmit}>
+                            <input className={classes.searchInput} type="text" placeholder="Buscar paciente" autoFocus={true} />
+                            <IconButton
+                                aria-label="Search"
+                                className={classes.searchIcon}
+                            >
+                                <SearchIcon />
+                            </IconButton>
+                        </form>
+                    </div>
+                </Hidden>
+
+                <Hidden smUp>
+                    <IconButton
+                        color="inherit"
+                        onClick={this.handleSearchExpandToggle}
+                        aria-expanded={searchExpanded}
+                        aria-label="Show searchbar"
+                    >
+                        <SearchIcon />
+                    </IconButton>
+                </Hidden>
+
+                <IconButton
+                    aria-label="User Settings"
+                    aria-owns={anchorEl ? 'user-menu' : null}
+                    aria-haspopup="true"
+                    color="inherit"
+                    onClick={this.handleSettingdToggle}
+                >
+                    <MoreVertIcon />
+                </IconButton>
+
+                <Menu
+                    id="user-menu"
+                    anchorEl={anchorEl}
+                    open={Boolean(anchorEl)}
+                    onClose={this.handleCloseMenu}
+                >
+                    <MenuItem onClick={this.handleCloseMenu}>
+                        <ListItemIcon>
+                            <SettingsIcon />
+                        </ListItemIcon>
+                        <ListItemText inset primary="Configuración" />
+                    </MenuItem>
+                    <MenuItem onClick={this.handleCloseMenu}>
+                        <ListItemIcon>
+                            <AccountBoxIcon />
+                        </ListItemIcon>
+                        <ListItemText inset primary="Perfil" />
+                    </MenuItem>
+                    <MenuItem onClick={this.handleCloseMenu}>
+                        <ListItemIcon>
+                            <NotificationsOffIcon />
+                        </ListItemIcon>
+                        <ListItemText inset primary="Notificaciones" />
+                    </MenuItem>
+                    <MenuItem onClick={this.handleCloseMenu}>
+                        <ListItemIcon>
+                            <ExitToAppIcon />
+                        </ListItemIcon>
+                        <ListItemText inset primary="Cerrar sesión" />
+                    </MenuItem>
+                </Menu>
+            </Toolbar>
+            <Hidden smUp>
+                <Collapse in={searchExpanded} timeout="auto" unmountOnExit>
+                    <Toolbar className={classes.toolBar}>
+                        <div className={classes.searchWrapper}>
+                            <form className={classNames(classes.searchForm, 'mr-0')}>
+                                <IconButton
+                                    aria-label="Search"
+                                    className={classes.searchIcon}
+                                >
+                                    <SearchIcon />
+                                </IconButton>
+                                <input className={classes.searchInput} type="text" placeholder="Search" autoFocus="true" />
+                            </form>
+                        </div>
+                    </Toolbar>
+                </Collapse>
+            </Hidden>
+        </AppBar>
     )
   }
 }

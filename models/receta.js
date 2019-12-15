@@ -1,5 +1,8 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../db/database');
+const Medicamento = require('./medicamento');
+const Consulta = require('./consulta');
+const Persona = require('./persona');
 
 const Receta = sequelize.define('receta', {
 	id: {
@@ -16,5 +19,7 @@ const Receta = sequelize.define('receta', {
 	tableName: 'receta',
 	timestamps: false
 });
+
+Receta.hasMany(Medicamento,{foreignKey:'receta_id',targetkey:'id',as:'medicamento'});
 
 module.exports = Receta;
