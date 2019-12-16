@@ -33,7 +33,6 @@ import ListClinicos from "../../stateless/ListClinicos";
 import ListMedicamentos from "../../stateless/ListMedicamentos";
 import ModalAlert from "../../stateless/ModalAlert";
 
-
 const TabContainer = (props) => (
     <Typography component="div" className="pa-0">
         {  props.children}
@@ -88,6 +87,73 @@ class ConsultaHome extends Component {
         },
         error: {}
     };
+
+    componentWillMount = () => {
+
+    }
+
+    componentDidMount = () => {
+        const { params } = this.props.match;
+        if (params.hasOwnProperty("id")){
+            const url = '/api/consulta/'+params.id;
+            fetch(url,{
+                method:'GET',
+                headers:{
+                    'Accept': 'application/json',
+                    'content-type': 'application/json'
+                }
+            }).then(response => {
+                return response.json();
+            }).then(data =>{
+                this.handleData(data);
+            });
+        } else {
+            let consulta = {
+                id:'',
+                persona_id:'',
+                nombre:'',
+                apellido_paterno:'',
+                apellido_materno:'',
+                temperatura:'',
+                presion:'',
+                frecuencia:'',
+                sintomas:'',
+    			carac_fisica:'',
+    			diagnostico:'',
+    			tratamiento:'',
+            };
+
+            let medicamento = {
+                id:'',
+                oid:-1,
+                descripcion:"",
+                dosis:"",
+                via_admin:"",
+                tiempo:"",
+                duracion:""
+            };
+
+            let data_medicamentos =[];
+
+            this.setState({consulta,medicamento,data_medicamentos});
+        }
+    }
+
+    componentWillReceiveProps = (nextProps) => {
+
+    }
+
+    componentWillUpdate = (nextProps, nextState) => {
+
+    }
+
+    componentDidUpdate = (prevProps, prevState) => {
+
+    }
+
+    componentWillUnmount = () => {
+
+    }
 
     handleChange = (evt) => {
         this.setState({ [evt.target.name] : evt.target.value});
@@ -199,6 +265,25 @@ class ConsultaHome extends Component {
                 this.setState({modal:modal});
             });
         }
+    }
+
+    handleData = (data) => {
+        let consulta = {
+            id:data.id,
+            persona_id:data.persona.id,
+            nombre:data.persona.nombre,
+            apellido_paterno:data.persona.apellido_paterno,
+            apellido_materno:data.persona.apellido_materno,
+            temperatura:data.temperatura,
+            presion:data.presion,
+            frecuencia:data.frecuencia,
+            sintomas:data.sintomas,
+            carac_fisica:data.carac_fisica,
+            diagnostico:data.diagnostico,
+            tratamiento:data.tratamiento,
+        };
+        this.setState({consulta});
+        //this.setState({consulta,medicamento,data_medicamentos});
     }
 
     render() {

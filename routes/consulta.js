@@ -10,10 +10,10 @@ router.get('/', function (req, res, next) {
 	});
 });
 
-router.get('/:id', function (req, res, next) {
+router.get('/persona/:id', function (req, res, next) {
 	const id = req.params.id;
 	const objConsulta = new CtlConsulta();
-	objConsulta.dbShow(id).then(data => {
+	objConsulta.dbFindPersona(id).then(data => {
 		let dataResponse = Object.assign('', data);
 		res.status(200).json(dataResponse.dataValues);
 	});
@@ -22,6 +22,8 @@ router.get('/:id', function (req, res, next) {
 router.post('/', async function (req, res, next) {
 	const objPersona = new CtlPersona();
 	const objConsulta = new CtlConsulta();
+	let persona;
+	let persona_id;
 	try {
 		if (req.body.persona_id == '') {
 			let model = {
@@ -36,13 +38,20 @@ router.post('/', async function (req, res, next) {
 				peso: '',
 				deleted: false
 			};
-			let persona = await objPersona.dbCreate(model);
+			persona = await objPersona.dbCreate(model);
+			persona_id = Object.assign('', persona[0]);
 		}
-		req.body.persona_id = persona[0].dataValues.id;
+		req.body.persona_id = persona[0].dataValues.id
+		let consulta = await objConsulta.dbCreate(req.body);
+		let data = await objConsulta.dbShow(consulta[0].dataValues.id);
+		let dataResponse = Object.assign('', data);
+		res.status(200).json(dataResponse.dataValues);
+
+		/*req.body.persona_id = persona[0].dataValues.id;
 		let consulta = await objConsulta.dbCreate(req.body);
 		let dta = await objConsulta.dbShow(consulta[0].dataValues.id);
 		let dataResponse = Object.assign('', dta);
-		res.status(200).json(dataResponse.dataValues);
+		res.status(200).json(dataResponse.dataValues);*/
 
 	} catch (ex) {
 		res.status(400).json({

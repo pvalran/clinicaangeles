@@ -9,18 +9,11 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import {Card, CardContent} from '@material-ui/core';
-
-
+import {Card, CardContent,CardActions} from '@material-ui/core';
 import { Wrapper } from '../components';
-
-
-
 import Delete from '@material-ui/icons/Delete';
 import Edit from '@material-ui/icons/Edit';
-
 import Paper from '@material-ui/core/Paper';
-
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 
@@ -31,7 +24,6 @@ const styles = theme => ({
         backgroundColor: theme.palette.background.paper,
     },
 });
-
 
 class SearchPacientes extends Component {
     state = {
@@ -63,8 +55,15 @@ class SearchPacientes extends Component {
                             <CardContent>
                                 <Typography variant="title" gutterBottom> <b> {item.nombre} {item.apepat} {item.apemat}</b></Typography>
                                 <Typography variant="body1" gutterBottom><a>www.example.com</a></Typography>
-                                <Link to={`/paciente/home/${item.id}`}>Paciente</Link>
+
                             </CardContent>
+                            <CardActions style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                            }}>
+                                <Link to={`/paciente/home/${item.id}`}>Paciente</Link>
+                                <Link to={`/consulta/persona/${item.id}`}>Consulta</Link>
+                            </CardActions>
                         </Card>
                     </Grid>
                 )}

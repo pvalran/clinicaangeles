@@ -1,14 +1,15 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../db/database');
 const Op = Sequelize.Op;
+const Persona = require('../models/persona');
 const Consulta = require('../models/consulta');
 const Receta = require('../models/receta');
 const Medicamento = require('../models/medicamento');
 
 const CtlConsulta = class CtlConsulta extends Consulta {
-	constructor() {
+    constructor() {
 		super();
-	}
+    }
 
 	dbIndex() {
 		return Consulta.findAll();
@@ -23,12 +24,15 @@ const CtlConsulta = class CtlConsulta extends Consulta {
 					include: [
 						'medicamento'
 					],
+				}, {
+                    model: Persona,
+					as: 'persona',
 				}
 			]
 		});
 	}
 
-	dbCreate(req) {
+    dbCreate(req) {
 		let model = {
 			'id':'',
 			'persona_id': req.persona_id,
@@ -73,6 +77,21 @@ const CtlConsulta = class CtlConsulta extends Consulta {
 			console.log("destroy");
 		});
 	}
+
+    dbFindPersona (id){
+        return Consulta.findOne({
+            where: {
+    name: 'a project',
+    id: {
+      [Op.or]: [
+        [1,2,3],
+        { [Op.gt]: 10 }
+      ]
+    }
+  }
+})
+;
+    }
 }
 
 module.exports = CtlConsulta;

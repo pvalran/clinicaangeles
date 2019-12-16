@@ -44,6 +44,10 @@ export default {
             path: '/home',
             name: 'Nueva',
             component: ConsultaHome
+        },{
+            path: '/:id',
+            name: 'Buscar',
+            component: ConsultaHome
         }]
     }, {
         path: '/expediente',
