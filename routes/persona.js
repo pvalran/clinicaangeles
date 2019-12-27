@@ -41,6 +41,7 @@ router.post('/', async function (req, res, next) {
 		}
 	});
 
+
 	req.body.direccion.persona_id = persona_id;
 	const objDireccion = new CtlDireccion();
 	let response = await objDireccion.dbCreate(req.body).then(async ([model, created]) => {

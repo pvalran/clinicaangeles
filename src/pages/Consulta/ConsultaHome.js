@@ -63,6 +63,11 @@ class ConsultaHome extends Component {
 			diagnostico:'',
 			tratamiento:'',
         },
+        receta:{
+            id: '',
+            persona_id: '',
+            consulta_id: ''
+        },
         medicamento_edit:'',
         medicamento:{
             id:'',
@@ -88,14 +93,10 @@ class ConsultaHome extends Component {
         error: {}
     };
 
-    componentWillMount = () => {
-
-    }
-
     componentDidMount = () => {
         const { params } = this.props.match;
         if (params.hasOwnProperty("id")){
-            const url = '/api/consulta/'+params.id;
+            const url = '/api/consulta/persona/'+params.id;
             fetch(url,{
                 method:'GET',
                 headers:{
@@ -137,23 +138,8 @@ class ConsultaHome extends Component {
 
             this.setState({consulta,medicamento,data_medicamentos});
         }
-    }
-
-    componentWillReceiveProps = (nextProps) => {
-
-    }
-
-    componentWillUpdate = (nextProps, nextState) => {
-
-    }
-
-    componentDidUpdate = (prevProps, prevState) => {
-
-    }
-
-    componentWillUnmount = () => {
-
-    }
+        this.forceUpdate();
+    };
 
     handleChange = (evt) => {
         this.setState({ [evt.target.name] : evt.target.value});
@@ -171,13 +157,13 @@ class ConsultaHome extends Component {
         let consulta = this.state.consulta;
         consulta[evt.target.name] = evt.target.value
         this.setState({consulta:consulta});
-    }
+    };
 
     handleMedicamento = (evt) => {
         let medicamento = this.state.medicamento;
         medicamento[evt.target.name] = evt.target.value
         this.setState({medicamento:medicamento});
-    }
+    };
 
     handleEditMedicamento = (idx) => {
         let medicamento = this.state.medicamento;
@@ -242,6 +228,9 @@ class ConsultaHome extends Component {
 
     handleSave = (evt) => {
         let consulta = this.state.consulta;
+        let medicamentos = this.state.data_medicamentos;
+        consulta.receta = this.state.receta;
+        consulta.receta.medicamentos = medicamentos;
         let error = {};
         if (Object.keys(error).length == 0){
             fetch('/api/consulta',{
@@ -265,15 +254,15 @@ class ConsultaHome extends Component {
                 this.setState({modal:modal});
             });
         }
-    }
+    };
 
     handleData = (data) => {
         let consulta = {
             id:data.id,
             persona_id:data.persona.id,
             nombre:data.persona.nombre,
-            apellido_paterno:data.persona.apellido_paterno,
-            apellido_materno:data.persona.apellido_materno,
+            apellido_paterno:data.persona.apepat,
+            apellido_materno:data.persona.apemat,
             temperatura:data.temperatura,
             presion:data.presion,
             frecuencia:data.frecuencia,
@@ -282,9 +271,36 @@ class ConsultaHome extends Component {
             diagnostico:data.diagnostico,
             tratamiento:data.tratamiento,
         };
-        this.setState({consulta});
-        //this.setState({consulta,medicamento,data_medicamentos});
-    }
+        let data_medicamentos = [];
+        let receta;
+        if (data.receta.length > 0) {
+            receta = {
+                id: data.receta[0].id,
+                persona_id: data.receta[0].persona_id,
+                consulta_id: data.receta[0].consulta_id
+            };
+
+            data.receta[0].medicamento.map((item,idx) =>
+                data_medicamentos.push({
+                    id: item.id,
+                    oid: idx,
+                    descripcion: item.descripcion,
+                    dosis: item.dosis,
+                    via_admin: item.via_administracion,
+                    tiempo: item.tiempo,
+                    duracion: item.duracion
+                })
+            );
+
+        } else {
+            receta = {
+                id: '',
+                persona_id: data.persona.id,
+                consulta_id: data.id
+            };
+        }
+        this.setState({consulta,receta,data_medicamentos});
+    };
 
     render() {
         const { classes } = this.props;
@@ -393,7 +409,7 @@ class ConsultaHome extends Component {
                                             </Tabs>
                                             { tab_consulta === "tab2_0" &&
                                                 <TabContainer>
-                                                    <FormControl className={classes.formControl} fullWidth>
+                                                    <FormControl className={classes.formControl} fullWidth={true}>
                                                         <textarea id="sintomas" name="sintomas" rows="15"
                                                             value={consulta.sintomas}
                                                             onChange={this.handleConsulta}
@@ -405,7 +421,7 @@ class ConsultaHome extends Component {
                                             }
                                             { tab_consulta === "tab2_1"  &&
                                                 <TabContainer>
-                                                    <FormControl className={classes.formControl} fullWidth>
+                                                    <FormControl className={classes.formControl}  fullWidth={true}>
                                                         <textarea id="carac_fisicas" name="carac_fisica" rows="15"
                                                             value={consulta.carac_fisica}
                                                             onChange={this.handleConsulta}
@@ -417,7 +433,7 @@ class ConsultaHome extends Component {
                                             }
                                             { tab_consulta === "tab2_2"  &&
                                                 <TabContainer>
-                                                    <FormControl className={classes.formControl} fullWidth>
+                                                    <FormControl className={classes.formControl} fullWidth={true}>
                                                         <textarea id="diagnostico" name="diagnostico" rows="15"
                                                             value={consulta.diagnostico}
                                                             onChange={this.handleConsulta}
@@ -429,7 +445,7 @@ class ConsultaHome extends Component {
                                             }
                                             { tab_consulta === "tab2_3"  &&
                                                 <TabContainer>
-                                                    <FormControl className={classes.formControl} fullWidth>
+                                                    <FormControl className={classes.formControl}  fullWidth={true}>
                                                         <textarea id="tratamiento" name="tratamiento" rows="15"
                                                             value={consulta.tratamiento}
                                                             onChange={this.handleConsulta}

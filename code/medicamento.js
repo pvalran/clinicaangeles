@@ -18,6 +18,7 @@ const CtlMedicamentos = class CtlMedicamentos extends Medicamento {
 
 	dbCreate(req) {
 		let model = {
+			'id':'',
 			'receta_id': req.receta_id,
 			'descripcion': req.descripcion,
 			'dosis': req.dosis,

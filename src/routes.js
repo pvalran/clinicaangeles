@@ -45,7 +45,7 @@ export default {
             name: 'Nueva',
             component: ConsultaHome
         },{
-            path: '/:id',
+            path: '/persona/:id',
             name: 'Buscar',
             component: ConsultaHome
         }]

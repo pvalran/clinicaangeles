@@ -18,6 +18,7 @@ const CtlReceta = class CtlReceta extends Receta {
 
 	dbCreate(req) {
 		let model = {
+			'id':'',
 			'persona_id': req.persona_id,
 			'consulta_id': req.consulta_id,
 			'fecha_alta': req.fecha_alta,

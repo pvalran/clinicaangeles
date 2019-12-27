@@ -49,8 +49,8 @@ class SearchPacientes extends Component {
         return (
             <Wrapper>
                 <Grid container spacing={8}>
-                { pacientes.map((item) =>
-                    <Grid item xs={12} sm={4} md={4} lg={4}>
+                { pacientes.map((item,idx) =>
+                    <Grid item xs={12} sm={4} md={4} lg={4} key={idx}>
                         <Card>
                             <CardContent>
                                 <Typography variant="title" gutterBottom> <b> {item.nombre} {item.apepat} {item.apemat}</b></Typography>

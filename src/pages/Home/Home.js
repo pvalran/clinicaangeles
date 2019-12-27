@@ -41,25 +41,14 @@ class Home extends Component{
 
     render(){
         const {item} = this.state;
-        /*
-
-           this.props.navigation.navigate('Details', {
-             itemId: 86,
-             otherParam: 'anything you want here',
-           });
-         }}
-        *const { navigation } = this.props;
-        *const itemId = navigation.getParam('itemId', 'NO-ID');
-        *const otherParam = navigation.getParam('otherParam', 'some default value');
-        */
         return (
             <Wrapper>
                 <Grid container spacing={8}>
-                { this.state.pacientes.map((item) =>
-                    <Grid item xs={12} sm={4} md={4} lg={4}>
+                { this.state.pacientes.map((item,idx) =>
+                    <Grid item xs={12} sm={4} md={4} lg={4} key={idx}>
                         <Card>
                             <CardContent>
-                                <Typography variant="subtitle1" gutterBottom> <b> {item.nombre} {item.apepat} {item.apemat}</b></Typography>
+                                <Typography variant="subheading" gutterBottom> <b> {item.nombre} {item.apepat} {item.apemat}</b></Typography>
                                 <Typography variant="caption">gerald@morris.com</Typography>
                                 <Typography variant="body1">Human Resources Manager</Typography>
                                 <Link to={`/paciente/home/${item.id}`}>Paciente</Link>

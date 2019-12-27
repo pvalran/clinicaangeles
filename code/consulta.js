@@ -80,18 +80,21 @@ const CtlConsulta = class CtlConsulta extends Consulta {
 
     dbFindPersona (id){
         return Consulta.findOne({
-            where: {
-    name: 'a project',
-    id: {
-      [Op.or]: [
-        [1,2,3],
-        { [Op.gt]: 10 }
-      ]
+			where: {persona_id: id},
+			include: [
+				{
+					model: Receta,
+					as: 'receta',
+					include: [
+						'medicamento'
+					],
+				}, {
+					model: Persona,
+					as: 'persona',
+				}
+			]
+		});
     }
-  }
-})
-;
-    }
-}
+};
 
 module.exports = CtlConsulta;

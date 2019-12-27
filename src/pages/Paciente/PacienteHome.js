@@ -201,10 +201,6 @@ class PacienteHome extends Component {
       error:{}
    };
 
-   componentWillMount = () => {
-
-   }
-
    componentDidMount = () => {
       const { params } = this.props.match;
       if (params.hasOwnProperty("id")){
@@ -248,23 +244,8 @@ class PacienteHome extends Component {
 
          this.setState({paciente,direccion,data_contactos,data_clinicos});
       }
-   }
+   };
 
-   componentWillReceiveProps = (nextProps) => {
-
-   }
-
-   componentWillUpdate = (nextProps, nextState) => {
-
-   }
-
-   componentDidUpdate = (prevProps, prevState) => {
-
-   }
-
-   componentWillUnmount = () => {
-
-   }
 
     handleData = (data) => {
         let paciente={
